@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  flask-helloworld:
+    env_file:
+      - .env
+    container_name: flask-helloworld
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "6000:5000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flask-helloworld.entrypoints=websecure"
+      - "traefik.http.routers.flask-helloworld.tls=true"
+      - "traefik.http.routers.flask-helloworld.rule=Host(`flaskhelloworld.addevent.co`)"
+      - "traefik.http.routers.flask-helloworld.service=flask-helloworld"
+      - "traefik.http.services.flask-helloworld.loadbalancer.server.port=9000"
