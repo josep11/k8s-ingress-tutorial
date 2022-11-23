@@ -14,6 +14,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.flask-helloworld.entrypoints=websecure"
       - "traefik.http.routers.flask-helloworld.tls=true"
-      - "traefik.http.routers.flask-helloworld.rule=Host(`flaskhelloworld.addevent.co`)"
+      - "traefik.http.routers.flask-helloworld.rule=Host(`flask-helloworld.co`)"
       - "traefik.http.routers.flask-helloworld.service=flask-helloworld"
       - "traefik.http.services.flask-helloworld.loadbalancer.server.port=9000"

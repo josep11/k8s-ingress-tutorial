@@ -2,6 +2,8 @@ CURRENT_PATH=$(shell pwd)
 TARGET_TAG=v1
 AWS_REPOSITORY=712449709000.dkr.ecr.eu-west-3.amazonaws.com
 
+APP_PORT=8080
+
 ## Help
 help:
 	@printf "Available targets:\n\n"
@@ -55,13 +57,32 @@ k/describe:
 k/get-all:
 	kubectl get all | grep flask
 
+k/setup:
+	minikube addons enable ingress
+	minikube addons enable ingress-dns
+
 k/deploy:
-	kubectl apply -f k8s/flask-deployment.yaml
-	kubectl apply -f k8s/flask-service.yaml 
+	kubectl apply -f k8s/.
 
 k/remove:
-	kubectl delete deployment flask-dep
-	kubectl delete svc flask-svc
+	kubectl delete -f k8s/.
+	minikube addons disable ingress
+	minikube addons disable ingress-dns
+	@echo TODO: remove entry from /etc/hosts
 
 minikube/assign-public-ip:
 	minikube service flask-svc
+
+browser-open:
+	open ${URL}
+
+# Forward app port and browse to verify it's working
+fw-app:
+	kubectl port-forward services/flask-svc ${APP_PORT}:80 > ./fwd.log 2>&1 &
+	echo "APP PID: $!"
+	sleep 3
+	make browser-open URL=http://127.0.0.1:${APP_PORT}/api
+	make browser-open URL=http://127.0.0.1:${APP_PORT}/private/api
+
+k/ingress-get-all:
+	k -n ingress-nginx get all
