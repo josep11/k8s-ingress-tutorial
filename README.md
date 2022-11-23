@@ -1,6 +1,6 @@
 # Goals
 
-There should be at least 2 endpoints. We want to have the ones prefixed with '/api' exposed and the ones prefixed with '/private/api' not exposed to the public internet.
+There should be at least 2 endpoints. We want to have the ones prefixed with `/api` exposed and the ones prefixed with `/private/api` not exposed to the public internet.
 
 ## Prerequisites
 

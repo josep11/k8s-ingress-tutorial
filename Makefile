@@ -41,10 +41,10 @@ stop: docker/stop
 
 ## Login to AWS ECR docker registry
 docker/login:
-ifndef ADDEVENT_AWS_PROFILE
+ifndef AWS_PROFILE
 	aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin ${AWS_REPOSITORY}
 else
-	aws ecr get-login-password --region eu-west-3 --profile $(ADDEVENT_AWS_PROFILE) | docker login --username AWS --password-stdin ${AWS_REPOSITORY}
+	aws ecr get-login-password --region eu-west-3 --profile $(AWS_PROFILE) | docker login --username AWS --password-stdin ${AWS_REPOSITORY}
 endif
 
 image/build:
